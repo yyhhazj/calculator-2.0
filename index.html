@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四则运算计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgb(194, 162, 218);
+            width: 400px;
+        }
+        .input-group, .button-group {
+            margin-bottom: 10px;
+        }
+        .input-group label, .button-group label {
+            width: 100px;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .input-group input, .button-group button {
+            flex-grow: 1;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>四则运算计算器</h2>
+        <div class="input-group">
+            <label for="expression">输入表达式:</label>
+            <input type="text" id="expression" required>
+        </div>
+        <div class="button-group">
+            <button id="calculateButton">计算</button>
+            <button id="randomButton">随机题目</button>
+        </div>
+        <div class="result">
+            <p>结果: <span id="result"></span></p>
+            <p class="error" id="error"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('calculateButton').addEventListener('click', function() {
+            var expression = document.getElementById('expression').value;
+            try {
+                var result = eval(expression);
+                document.getElementById('result').textContent = result;
+                document.getElementById('error').textContent = '';
+            } catch (e) {
+                document.getElementById('result').textContent = '';
+                document.getElementById('error').textContent = '计算错误: ' + e.message;
+            }
+        });
+
+        document.getElementById('randomButton').addEventListener('click', function() {
+            var nums = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+            var operators = ['+', '-', '*', '/'];
+            var num1 = nums[0];
+            var num2 = nums[1];
+            var operator = operators[Math.floor(Math.random() * operators.length)];
+            // 将乘除符号改为数学上的乘除符号
+            operator = operator === '*' ? '&times;' : operator === '/' ? '&divide;' : operator;
+            var expression = num1 + ' ' + operator + ' ' + num2;
+            document.getElementById('expression').value = expression;
+        });
+    </script>
+</body>
+</html>
